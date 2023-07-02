@@ -12,12 +12,12 @@ class UserFormState {
   final bool isValid;
 
   UserFormState copyWith({
-    TextEditingController? email,
+    TextEditingController? name,
     TextEditingController? password,
     bool? isValid,
   }) {
     return UserFormState(
-      name: email ?? this.name,
+      name: name ?? this.name,
       password: password ?? this.password,
       isValid: isValid ?? this.isValid,
     );

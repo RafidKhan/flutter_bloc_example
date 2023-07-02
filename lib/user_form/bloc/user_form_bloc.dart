@@ -1,9 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_example/user_form/bloc/user_form_state.dart';
-
-part 'user_form_event.dart';
 
 class UserFormBloc extends BlocBase<UserFormState> {
   UserFormBloc()

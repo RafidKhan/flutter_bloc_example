@@ -31,7 +31,6 @@ class UserFormScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Text("${state.isValid}"),
                   ElevatedButton(
                     onPressed: state.isValid
                         ? () {

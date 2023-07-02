@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_example/dashboard/dashboard_screen.dart';
 import 'package:flutter_bloc_example/user_form/view/user_form_screen.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: UserFormScreen(),
+      home: DashboardScreen(),
     );
   }
 }
