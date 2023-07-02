@@ -35,6 +35,7 @@ class UserDetailScreen extends StatelessWidget {
                         nameController: state.nameController,
                         emailController: state.emailController,
                         userNameController: state.userNameController,
+                        isEnabled: state.isSaveButtonEnabled,
                         onSave: () {
                           Navigator.pop(context);
                           bloc.updateData();

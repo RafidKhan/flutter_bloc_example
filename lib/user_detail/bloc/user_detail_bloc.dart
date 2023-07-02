@@ -13,8 +13,19 @@ class UserDetailBloc extends BlocBase<UserDetailState> {
             nameController: TextEditingController(),
             emailController: TextEditingController(),
             userNameController: TextEditingController(),
+            isSaveButtonEnabled: false,
           ),
-        );
+        ) {
+    state.nameController.addListener(() {
+      checkSaveButtonStatus();
+    });
+    state.emailController.addListener(() {
+      checkSaveButtonStatus();
+    });
+    state.userNameController.addListener(() {
+      checkSaveButtonStatus();
+    });
+  }
 
   void updateData() {
     final String name = state.nameController.text.trim().isNotEmpty
@@ -34,5 +45,15 @@ class UserDetailBloc extends BlocBase<UserDetailState> {
         username: userName,
       ),
     ));
+  }
+
+  checkSaveButtonStatus() {
+    if (state.nameController.text.trim().isEmpty &&
+        state.emailController.text.trim().isEmpty &&
+        state.userNameController.text.trim().isEmpty) {
+      emit(state.copyWith(isSaveButtonEnabled: false));
+    } else {
+      emit(state.copyWith(isSaveButtonEnabled: true));
+    }
   }
 }

@@ -5,6 +5,7 @@ class UpdateNameBottomSheet extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController userNameController;
   final VoidCallback onSave;
+  final bool isEnabled;
 
   const UpdateNameBottomSheet({
     Key? key,
@@ -12,6 +13,7 @@ class UpdateNameBottomSheet extends StatelessWidget {
     required this.emailController,
     required this.userNameController,
     required this.onSave,
+    required this.isEnabled,
   }) : super(key: key);
 
   @override
@@ -41,7 +43,7 @@ class UpdateNameBottomSheet extends StatelessWidget {
             controller: userNameController,
           ),
           ElevatedButton(
-            onPressed: onSave,
+            onPressed: isEnabled ? onSave : null,
             child: const Text("Save"),
           ),
         ],
