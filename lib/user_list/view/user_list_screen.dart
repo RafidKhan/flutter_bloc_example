@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_example/user_form/bloc/user_form_bloc.dart';
 import 'package:flutter_bloc_example/user_list/bloc/user_list_bloc.dart';
 import 'package:flutter_bloc_example/user_list/bloc/user_list_state.dart';
 
@@ -14,8 +13,7 @@ class UserListScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(),
         body: BlocBuilder<UserListBloc, UserListState>(
-            builder: (BuildContext context, UserListState state) {
-          final bloc = context.read<UserListBloc>();
+            builder: (BuildContext context,  state) {
           if (state.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),

@@ -5,11 +5,12 @@ import 'package:flutter_bloc_example/user_form/bloc/user_form_state.dart';
 class UserFormBloc extends BlocBase<UserFormState> {
   UserFormBloc()
       : super(UserFormState(
-          name: TextEditingController(),
+          email: TextEditingController(),
           password: TextEditingController(),
           isValid: false,
+          isPasswordObscure: true,
         )) {
-    state.name.addListener(() {
+    state.email.addListener(() {
       isValid();
     });
     state.password.addListener(() {
@@ -18,8 +19,13 @@ class UserFormBloc extends BlocBase<UserFormState> {
   }
 
   void isValid() {
-    if (state.name.text.trim().isNotEmpty &&
-        state.password.text.trim().isNotEmpty) {
+    final bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(state.email.text.trim());
+
+    if (state.email.text.trim().isNotEmpty &&
+        state.password.text.trim().isNotEmpty &&
+        emailValid) {
       emit(state.copyWith(isValid: true));
     } else {
       emit(state.copyWith(isValid: false));
@@ -27,8 +33,30 @@ class UserFormBloc extends BlocBase<UserFormState> {
   }
 
   loginUser(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("${state.name.text} ${state.password.text}"),
-    ));
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Login Successful"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(state.email.text),
+            Text(state.password.text),
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text("Okay"),
+          )
+        ],
+      ),
+    );
+  }
+
+  togglePasswordObscureStatus() {
+    emit(state.copyWith(isPasswordObscure: !state.isPasswordObscure));
   }
 }

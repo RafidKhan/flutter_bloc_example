@@ -2,23 +2,27 @@ import 'package:flutter/cupertino.dart';
 
 class UserFormState {
   const UserFormState({
-    required this.name,
+    required this.email,
     required this.password,
+    required this.isPasswordObscure,
     required this.isValid,
   });
 
-  final TextEditingController name;
+  final TextEditingController email;
   final TextEditingController password;
+  final bool isPasswordObscure;
   final bool isValid;
 
   UserFormState copyWith({
-    TextEditingController? name,
+    TextEditingController? email,
     TextEditingController? password,
+    bool? isPasswordObscure,
     bool? isValid,
   }) {
     return UserFormState(
-      name: name ?? this.name,
+      email: email ?? this.email,
       password: password ?? this.password,
+      isPasswordObscure: isPasswordObscure ?? this.isPasswordObscure,
       isValid: isValid ?? this.isValid,
     );
   }
