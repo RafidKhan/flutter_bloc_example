@@ -24,8 +24,7 @@ class UserListBloc extends BlocBase<UserListState> {
       List users = response.data;
       List<UserModel> tempUsers = [];
       users.forEach((element) {
-        tempUsers
-            .add(UserModel(name: element['name'], email: element['email']));
+        tempUsers.add(UserModel.fromMap(element));
       });
       emit(state.copyWith(
         isLoading: false,

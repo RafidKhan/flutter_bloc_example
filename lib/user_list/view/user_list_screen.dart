@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_example/user_detail/view/user_detail_screen.dart';
 import 'package:flutter_bloc_example/user_list/bloc/user_list_bloc.dart';
 import 'package:flutter_bloc_example/user_list/bloc/user_list_state.dart';
 
@@ -13,7 +14,7 @@ class UserListScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(),
         body: BlocBuilder<UserListBloc, UserListState>(
-            builder: (BuildContext context,  state) {
+            builder: (BuildContext context, state) {
           if (state.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -40,6 +41,16 @@ class UserListScreen extends StatelessWidget {
                   return ListTile(
                     title: Text(user.name),
                     subtitle: Text(user.email),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserDetailScreen(
+                            userModel: user,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 });
           }

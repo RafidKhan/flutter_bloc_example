@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_example/user_form/bloc/user_form_state.dart';
+import 'package:flutter_bloc_example/utils/extentions.dart';
 
 class UserFormBloc extends BlocBase<UserFormState> {
   UserFormBloc()
@@ -19,13 +20,13 @@ class UserFormBloc extends BlocBase<UserFormState> {
   }
 
   void isValid() {
-    final bool emailValid = RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(state.email.text.trim());
+    final bool emailValid = state.email.text.isValidEmail();
+    final bool isValidPassword = state.password.text.isValidPassword();
 
     if (state.email.text.trim().isNotEmpty &&
         state.password.text.trim().isNotEmpty &&
-        emailValid) {
+        emailValid &&
+        isValidPassword) {
       emit(state.copyWith(isValid: true));
     } else {
       emit(state.copyWith(isValid: false));
@@ -47,6 +48,14 @@ class UserFormBloc extends BlocBase<UserFormState> {
         actions: [
           ElevatedButton(
             onPressed: () {
+              emit(
+                state.copyWith(
+                  email: TextEditingController(),
+                  password: TextEditingController(),
+                  isValid: false,
+                  isPasswordObscure: true,
+                ),
+              );
               Navigator.pop(context);
             },
             child: const Text("Okay"),

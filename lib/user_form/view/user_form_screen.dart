@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_example/user_form/bloc/user_form_bloc.dart';
 import 'package:flutter_bloc_example/user_form/bloc/user_form_state.dart';
+import 'package:flutter_bloc_example/utils/extentions.dart';
 
 class UserFormScreen extends StatelessWidget {
   const UserFormScreen({Key? key}) : super(key: key);
@@ -31,9 +32,10 @@ class UserFormScreen extends StatelessWidget {
                       },
                       validator: (value) {
                         if (value != null) {
-                          final bool emailValid = RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value.trim());
+                          final bool emailValid = value.isValidEmail();
+                          if (value.isEmpty) {
+                            return "Email is required";
+                          }
                           if (!emailValid) {
                             return "Please enter a valid email";
                           }
@@ -42,7 +44,7 @@ class UserFormScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    TextField(
+                    TextFormField(
                       controller: state.password,
                       obscureText: state.isPasswordObscure,
                       decoration: InputDecoration(
@@ -54,6 +56,23 @@ class UserFormScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      onChanged: (value) {
+                        formKey.currentState?.validate();
+                      },
+                      validator: (value) {
+                        if (value != null) {
+                          final bool isValidPassword = value.isValidPassword();
+                          if (value.isEmpty) {
+                            return "Password is required";
+                          }
+
+                          if (!isValidPassword) {
+                            return "Password should be 6 digits";
+                          }
+                        }
+
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 20,
